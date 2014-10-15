@@ -1,4 +1,4 @@
 blendoku
 ========
 
-webgl and api based blendoku
+webgl based blendoku
