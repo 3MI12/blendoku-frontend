@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>WebGL</title>
+<link rel="stylesheet" href="css/style.css" media="screen" />
+<script type="text/javascript" src="js/jquery_1_11_1.js"></script>
+<script type="text/javascript" src="js/TweenMax.min.js"></script>
+<script type="text/javascript" src="js/three.min.js"></script>
+
+<script type="text/javascript" src="js/3d.js"></script>
+<script type="text/javascript" src="js/dragndrop.js"></script>
+<script type="text/javascript" src="js/placeGrid.js"></script>
+<script type="text/javascript" src="js/jsonHandler.js"></script>
+<script type="text/javascript" src="js/menuControl.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+	var time; 
+	var score = 0;
+	var skill = 2;
+	var scoreCount;
+	
+	$('.score').click(function(){
+		scoreCount = setInterval(function(){
+							score += skill*3; 
+							$('.score').text(score);							
+							}, 300);
+	});
+	
+	$('.finish').click(function() {
+
+			//post JSON with solution on click(button "Level lösen")
+			var solutionJSON = getSolutionJSON();
+			$.ajax({
+				type: "POST",
+				url: "http://steve.blendoku.verbunden.net/scripts/json.php",
+				//async: false,
+				// The key needs to match your method's input parameter (case-sensitive).
+				data: JSON.stringify({
+					solvedGrid: solutionJSON
+				}),
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function(data) {
+					alert("test");
+					alert(data);
+				},
+				failure: function(errMsg) {
+					alert(errMsg);
+				}
+			});
+
+			clearIntervall(scoreCount);
+		});
+});
+</script>
+
+</head>
+<body>
+
+<div id="wrapper">
+	<div id="left">
+	    <div class="ingame_owl"></div>
+        <ul class="leftMenu">
+            <li class="back">zum Menü</li>
+            <li class="finish">lösen</li>
+            <li class="score"></li>
+        </ul>
+	</div>
+    <div class="tutorialGUI"><iframe width="100%" height="100%" src="//www.youtube.com/embed/Ua2loiGHZ38" frameborder="0" allowfullscreen></iframe></div>
+    <div class="levelSelection">
+		<div class="difficultySelection">
+        	<div class="easy"><span>leicht</span></div>
+            <div class="middle">mittel</div>
+            <div class="hard"><span>schwer</span></div>
+        </div>
+    	<div class="allLevels">
+            <div class="level first">1</div>
+            <div class="level second">2</div>
+            <div class="level third">3</div>
+            <div class="level fourth">4</div>
+        	<div class="level fifth">5</div>
+        </div>
+    </div>
+    <div id="foreground">
+    	<div class="inside">
+        	<div class="mainMenu">
+                <div class="rope"></div>
+                <div class="menu_owl"></div>
+                <ul class="menu">
+                	<li class="start">Start</li>
+                    <li class="tutorial">Tutorial</li>
+                    <li class="level">Level</li>
+                    <li class="highscore">Highscore</li>
+                </ul>    
+			</div>
+        </div>
+    </div>
+	<div id="webGLContainer"></div>
+	<!-- Wolken von Andrea -->
+	<div class="wolken">
+        <div class="animationHG wolkenHG">
+            <img src="img/WolkenHG.png" alt="Wolken">
+        </div>
+        <div class="animationMitte wolkenMitte">
+            <img src="img/WolkenMitte.png" alt="Wolken">
+        </div>
+        <div class="animationVG wolkenVG">
+            <img src="img/WolkenVG.png" alt="Wolken">
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

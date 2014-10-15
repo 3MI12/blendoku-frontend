@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>WebGL</title>
+<link rel="stylesheet" href="css/style.css" media="screen" />
+<script type="text/javascript" src="js/jquery_1_11_1.js"></script>
+<script type="text/javascript" src="js/TweenMax.min.js"></script>
+<script type="text/javascript" src="js/three.js"></script>
+
+<script type="text/javascript" src="js/3d.js"></script>
+<script type="text/javascript" src="js/dragDrop.js"></script>
+<script type="text/javascript" src="js/menuControl.js"></script>
+
+
+</head>
+<body>
+
+<div id="wrapper">
+	<div id="left">
+	    <div class="ingame_owl"></div>
+        <ul class="leftMenu">
+            <li class="back">zum Menü</li>
+            <li class="finish">lösen</li>
+        </ul>
+	</div>
+    <div class="tutorialGUI"><iframe width="100%" height="100%" src="//www.youtube.com/embed/Ua2loiGHZ38" frameborder="0" allowfullscreen></iframe></div>
+    <div class="levelSelection">
+    	<?php $x = 10;
+        	  while($x<10): ?>
+              <?php echo $x;?>	
+              <div class="level_<?php echo $x; ?>"></div>
+        <?php $x++; ?>
+    	<?php endwhile;?>
+    
+    	
+    </div>
+    <div id="foreground">
+    	<div class="inside">
+        	<div class="mainMenu">
+                <div class="rope"></div>
+                <div class="menu_owl"></div>
+                <ul class="menu">
+                	<li class="start">Start</li>
+                    <li class="tutorial">Tutorial</li>
+                    <li class="level">Level</li>
+                    <li class="highscore">Highscore</li>
+                </ul>    
+			</div>
+        </div>
+    </div>
+	<div id="webGLContainer"></div>
+	<!-- Wolken von Andrea -->
+	<div class="wolken">
+        <div class="animationHG wolkenHG">
+            <img src="img/WolkenHG.png" alt="Wolken">
+        </div>
+        <div class="animationMitte wolkenMitte">
+            <img src="img/WolkenMitte.png" alt="Wolken">
+        </div>
+        <div class="animationVG wolkenVG">
+            <img src="img/WolkenVG.png" alt="Wolken">
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
