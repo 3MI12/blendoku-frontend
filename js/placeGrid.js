@@ -218,5 +218,8 @@ function resetGrid() {
   eraseGrid();
   readJson(level["id"]);
   placeGameGrid();
+  console.log("startgame");
   startGrid();
+    console.log("startgame2");
+
 }

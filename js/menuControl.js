@@ -5,44 +5,45 @@ $(document).ready(function(){
 	
 	
 	$('.menu li.start').click(function(){
-		$('#foreground').animate({opacity: "0"},1500, function(){$('.back').addClass('open');
-																 $('#left').addClass('open');
-																 });
+		$('#foreground').animate({opacity: "0"},1500, function(){
+														$('#left').addClass('open');
+														if($(window).width() < 769){
+															$('.tablet_navi').addClass('open');
+														}
+														});
 		$('#foreground').animate({left: "-100%"},1);
-		if($(window).width() < 769){
-			$('.tablet_navi').addClass('open');
-		}
+		
 	});
 	
 	$('.menu li.tutorial').click(function(){
 		$('#foreground').animate({opacity: "0"},1500,function(){
-														$('.back').addClass('open');
 														$('#left').addClass('open');
-														$('#left .finish').css('display', 'none');
-														
+														showOnlyBackToMainDeskop();
 														$('.tutorialGUI').addClass('open');
+														showOnlyBackToMainTablet();
+														if($(window).width() < 769){
+															
+														}
 														});	
 		$('#foreground').animate({left: "-100%"},1);
-		if($(window).width() < 769){
-			showOnlyBackToMain()
-		}
+		
 	});
 	
 	$('.menu li.level').click(function(){
 		$('#foreground').animate({opacity: "0"},1500,function(){
-														$('.back').addClass('open');
 														$('#left').addClass('open');
-														$('#left .finish').css('display', 'none');
+														showOnlyBackToMainDeskop();
 														$('.difficultySelection').addClass('open');
+														if($(window).width() < 769){
+															showOnlyBackToMainTablet();
+														}	
 														});	
 		$('#foreground').animate({left: "-100%"},1);	
-		if($(window).width() < 769){
-			showOnlyBackToMain();
-		}				
-		alert($( window ).width());									
+					
+									
 	});
 	
-	$('.difficultySelection .easy').click(function(){
+	$('.difficultySelection .difficulty').click(function(){
 		$('.difficultySelection').removeClass('open');
 		$('.allLevels').addClass('open');
 	});
@@ -57,6 +58,7 @@ $(document).ready(function(){
 		$('.difficultySelection').removeClass('open');
 		$('.allLevels').removeClass('open');
 		$('#left .finish').css('display', 'block');
+		$('#left .score').css('display', 'block');
 		$('#foreground').animate({left: "0"},1);
 		$('#foreground').animate({opacity: "1"},1500);
     });
@@ -64,15 +66,19 @@ $(document).ready(function(){
 	
 	function resetMobileNav(){
 		$('.tablet_navi').removeClass('open');
-		$('.tablet_navi .finish').css("dispaly", "block");
-		$('.tablet_navi .score').css("display","block");
+		$('.tablet_navi .finish').css('dispaly', 'block');
+		$('.tablet_navi .score').css('display','block');
 	}
 	
-	function showOnlyBackToMain(){
+	function showOnlyBackToMainTablet(){
 		$('.tablet_navi').addClass('open');
-		$('.tablet_navi .finish').css("dispaly", "none");
-		$('.tablet_navi .score').css("display","none");
-		
+		$('.tablet_navi.open .finish').css('display', 'none');
+		$('.tablet_navi .score').css('display', 'none');
+	}
+	
+	function showOnlyBackToMainDeskop(){
+		$('#left .finish').css('display', 'none');
+		$('#left .score').css('display', 'none');
 	}
 	
 });

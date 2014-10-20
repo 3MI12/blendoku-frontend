@@ -212,7 +212,7 @@ $(document).ready(function() {
   });
 
   function render() {
-
+		console.log(status);
 
     // alle 5 frames mousezeiger und selected object prüfen im wait status, um mauszeiger verschiebung anzupassen
 
@@ -238,6 +238,7 @@ $(document).ready(function() {
 
 			//setStartingPosition of GridElements after set Status to wait
 			if (status == "wait") {
+				console.log("test3");
 				for (var i = 0; i < colorArray.length; i++) {
 				dragingCubes[i].startPositionY = dragingCubes[i].position.y;
 				dragingCubes[i].startPositionX = dragingCubes[i].position.x;

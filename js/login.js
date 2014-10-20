@@ -20,11 +20,7 @@ $(document).ready(function(){
 		username = $('input#username').val();		
 		password = $('input#password').val();
 		
-		usernameCookie = $.cookie("username", username, { expires: 1, path: '/' });		// create cookie for username, expires after 1 day
-		passwordCookie = $.cookie("password", password, { expires: 1, path: '/' });		// create cookie for password, expires after 1 day
 		
-
-
 		
 		// construct the json for the userdata
 		jsonUser = '{';
@@ -42,20 +38,27 @@ $(document).ready(function(){
 			success: function(data){
 				if(data['status'] == 'wrong_password'){
 					alert("Du hast ein falsches Passwort eingegeben.\nBitte versuche es erneut.");	
-					resetPassword();
+					resetPassword();	
+					return;		// return to login screen 
 				}
 				if(data['status'] == 'short_username'){
 					alert('Dein Benutzername passt nicht zu dem Passwort! \nBitte versuche es erneut.');
 					resetName();
 					resetPassword();
+					return;		// return to login screen 
 				}
-				if(data['status'] == 'short_password'){
+				if(data['status'] == 'short_password'){		// password is less than 5 
 					alert('Dein Passwort muss mindestens 5 Zeichen beinhalten.');
 					resetPassword();
+					return;		// return to login screen 
 				}
 				else{
 					jsonLogout = '{"user":{"name":"'+data['name']+'","accesstoken":"'+data['accesstoken']+'"}}';
-					$.cookie("accesstoken", data['accesstoken'], { expires: 1, path: '/' });
+					usernameCookie = $.cookie("username", username, { expires: 1, path: '/' });		// create cookie for username, expires after 1 day
+
+					user["accesstoken"] = data['accesstoken'];
+					user["name"] = data['name'];
+					console.log("else zweig: " + user["name"] + " , " + user["accesstoken"]);
 					$('.logout').addClass('open');		// shows up logout-button
 					$('.login').removeClass('open');	// hides login-form
 					$('.mainMenu').css("display", "block");
@@ -65,10 +68,7 @@ $(document).ready(function(){
 			  alert(errMsg);
 			}
 		});
-				user["name"] = $.cookie("username");
-		user["accesstoken"] = $.cookie("accesstoken");
-
-		user["password"] = $.cookie("password");
+		
 	});
 	
 	$('.logout').click(function(){
@@ -82,6 +82,7 @@ $(document).ready(function(){
 			success: function(data){
 				alert("Du hast dich erfolgreich ausgeloggt.\nBis bald.");
 				$('.logout').removeClass('open');
+				$.removeCookie('usernameCookie');
 				resetPassword();				// when logged out the password mst not be set. otherwise a third party could use account illegally
 				showLogin();
 			},
@@ -95,7 +96,7 @@ $(document).ready(function(){
 
 	function showLogin(){
 		$('.login').addClass('open');					
-		$('.mainMenu').css("display", "none");
+		$('.mainMenu').css('display', 'none');
 	}
 	
 	function resetPassword(){
