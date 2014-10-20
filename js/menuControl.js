@@ -9,6 +9,9 @@ $(document).ready(function(){
 																 $('#left').addClass('open');
 																 });
 		$('#foreground').animate({left: "-100%"},1);
+		if($(window).width() < 769){
+			$('.tablet_navi').addClass('open');
+		}
 	});
 	
 	$('.menu li.tutorial').click(function(){
@@ -20,6 +23,9 @@ $(document).ready(function(){
 														$('.tutorialGUI').addClass('open');
 														});	
 		$('#foreground').animate({left: "-100%"},1);
+		if($(window).width() < 769){
+			showOnlyBackToMain()
+		}
 	});
 	
 	$('.menu li.level').click(function(){
@@ -29,7 +35,11 @@ $(document).ready(function(){
 														$('#left .finish').css('display', 'none');
 														$('.difficultySelection').addClass('open');
 														});	
-		$('#foreground').animate({left: "-100%"},1);														
+		$('#foreground').animate({left: "-100%"},1);	
+		if($(window).width() < 769){
+			showOnlyBackToMain();
+		}				
+		alert($( window ).width());									
 	});
 	
 	$('.difficultySelection .easy').click(function(){
@@ -40,6 +50,7 @@ $(document).ready(function(){
 	
 	
 	$('.back').click(function(){
+		resetMobileNav();
 		$('.back.open').removeClass('open');
 		$('#left.open').removeClass('open');
 		$('.tutorialGUI').removeClass('open');
@@ -51,6 +62,17 @@ $(document).ready(function(){
     });
 	
 	
+	function resetMobileNav(){
+		$('.tablet_navi').removeClass('open');
+		$('.tablet_navi .finish').css("dispaly", "block");
+		$('.tablet_navi .score').css("display","block");
+	}
 	
+	function showOnlyBackToMain(){
+		$('.tablet_navi').addClass('open');
+		$('.tablet_navi .finish').css("dispaly", "none");
+		$('.tablet_navi .score').css("display","none");
+		
+	}
 	
 });

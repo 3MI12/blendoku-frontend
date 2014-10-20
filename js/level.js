@@ -63,8 +63,6 @@ $(document).ready(function() {
   animate();
 
   function init() {
-      projector = new THREE.Projector();
-
     //add renderer Container to the DOM
     container = document.createElement('div');
     container.setAttribute("id", "renderer");
@@ -79,6 +77,7 @@ $(document).ready(function() {
     console.log(gameGridGroup.children[0].editable);
 
     //create projector
+    projector = new THREE.Projector();
 
     //create Scene
     scene = new THREE.Scene();

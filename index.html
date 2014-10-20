@@ -2,64 +2,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>WebGL</title>
+<title>Blendoku</title>
 <link rel="stylesheet" href="css/style.css" media="screen" />
 <script type="text/javascript" src="js/jquery_1_11_1.js"></script>
-<script type="text/javascript" src="js/TweenMax.min.js"></script>
-<script type="text/javascript" src="js/three.min.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/three.js"></script>
 
+<script type="text/javascript" src="js/login.js"></script>
 <script type="text/javascript" src="js/3d.js"></script>
 <script type="text/javascript" src="js/dragndrop.js"></script>
+<script type="text/javascript" src="js/menuControl.js"></script>
+<!--<script type="text/javascript" src="js/score2.js"></script>-->
+<script type="text/javascript" src="js/selectLevel.js"></script>
 <script type="text/javascript" src="js/placeGrid.js"></script>
 <script type="text/javascript" src="js/jsonHandler.js"></script>
-<script type="text/javascript" src="js/menuControl.js"></script>
-
-<script type="text/javascript">
-	$(document).ready(function(){
-	var time; 
-	var score = 0;
-	var skill = 2;
-	var scoreCount;
-	
-	$('.score').click(function(){
-		scoreCount = setInterval(function(){
-							score += skill*3; 
-							$('.score').text(score);							
-							}, 300);
-	});
-	
-	$('.finish').click(function() {
-
-			//post JSON with solution on click(button "Level lösen")
-			var solutionJSON = getSolutionJSON();
-			$.ajax({
-				type: "POST",
-				url: "http://steve.blendoku.verbunden.net/scripts/json.php",
-				//async: false,
-				// The key needs to match your method's input parameter (case-sensitive).
-				data: JSON.stringify({
-					solvedGrid: solutionJSON
-				}),
-				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: function(data) {
-					alert("test");
-					alert(data);
-				},
-				failure: function(errMsg) {
-					alert(errMsg);
-				}
-			});
-
-			clearIntervall(scoreCount);
-		});
-});
-</script>
 
 </head>
 <body>
 
 <div id="wrapper">
+	<ul class="tablet_navi">
+        <li class="back">zum Menü</li>
+        <li class="finish">lösen</li>
+        <li class="score"></li>
+    </ul>
 	<div id="left">
 	    <div class="ingame_owl"></div>
         <ul class="leftMenu">
@@ -71,20 +37,32 @@
     <div class="tutorialGUI"><iframe width="100%" height="100%" src="//www.youtube.com/embed/Ua2loiGHZ38" frameborder="0" allowfullscreen></iframe></div>
     <div class="levelSelection">
 		<div class="difficultySelection">
-        	<div class="easy"><span>leicht</span></div>
-            <div class="middle">mittel</div>
-            <div class="hard"><span>schwer</span></div>
+        	<div class="easy difficulty"><span>leicht</span></div>
+            <div class="middle difficulty">mittel</div>
+            <div class="hard difficulty"><span>schwer</span></div>
         </div>
     	<div class="allLevels">
-            <div class="level first">1</div>
-            <div class="level second">2</div>
-            <div class="level third">3</div>
-            <div class="level fourth">4</div>
-        	<div class="level fifth">5</div>
+            <div class="chooseLevel first" level="">1</div>
+            <div class="chooseLevel second" level="">2</div>
+            <div class="chooseLevel third" level="">3</div>
+            <div class="chooseLevel fourth" level="">4</div>
+        	<div class="chooseLevel fifth" level="">5</div>
         </div>
     </div>
     <div id="foreground">
+    	<div class="logout">Logout</div>
     	<div class="inside">
+        	<div class="login">
+            	<div class="form_explanation">Melde dich einfach mit deinem Wunschnamen und deinem Passwort an um das Spiel zu spielen. Falls dein Wunschname schon vergeben sein sollte benutze bitte einen anderen. </div>
+            	<form action="" method="POST">
+                	<!--<label for="username">Benutzername:</label>-->
+                    <input type="text" id="username" name="_username" placeholder="Benutzername"/>
+                    <!--<label for="password">Passwort:</label>-->
+                    <input type="password" id="password" name="_password" placeholder="Passwort"/>
+                     <button class="button">anmelden</button>
+                </form>
+               
+            </div>
         	<div class="mainMenu">
                 <div class="rope"></div>
                 <div class="menu_owl"></div>
@@ -101,16 +79,15 @@
 	<!-- Wolken von Andrea -->
 	<div class="wolken">
         <div class="animationHG wolkenHG">
-            <img src="img/WolkenHG.png" alt="Wolken">
+            <img src="img/WolkenHG.png" alt="Wolken" />
         </div>
         <div class="animationMitte wolkenMitte">
-            <img src="img/WolkenMitte.png" alt="Wolken">
+            <img src="img/WolkenMitte.png" alt="Wolken" />
         </div>
         <div class="animationVG wolkenVG">
-            <img src="img/WolkenVG.png" alt="Wolken">
+            <img src="img/WolkenVG.png" alt="Wolken" />
         </div>
     </div>
-</div>
 </div>
 </body>
 </html>
