@@ -16,6 +16,28 @@
 <script type="text/javascript" src="js/selectLevel.js"></script>
 <script type="text/javascript" src="js/placeGrid.js"></script>
 <script type="text/javascript" src="js/jsonHandler.js"></script>
+<script type="text/javascript">
+	// responsive design for different grades of vertical solution of the display
+	$(window).resize(function(){
+		if($(window).height() <= 910 && $(window).height() > 860){
+			$('.login form').css("bottom", "-15%");
+		}
+		if($(window).height() <= 860 && $(window).height() > 800){
+			$('.login form').css("bottom", "-20%");
+			$('.tutorialGUI.open').css("top", "20%");
+			$('.difficultySelection.open').css("bottom", "-20%");
+			$('.allLevels.open').css("bottom", "-20%");
+		}
+		if($(window).height() <= 800){
+			$('.login form').css("bottom", "-30%");
+		}
+		else{
+			$('.login form').css("bottom", "0%");
+		}
+		
+	});
+</script>
+
 
 </head>
 <body>
@@ -49,6 +71,7 @@
         	<div class="chooseLevel fifth" level="">5</div>
         </div>
     </div>
+    <div class="highscoreContainer"></div>
     <div id="foreground">
     	<div class="logout">Logout</div>
     	<div class="inside">

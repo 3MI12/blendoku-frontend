@@ -52,7 +52,7 @@ function placeGameGrid() {
         gameGrid[i].id = 2000 + startGridArray[z].id;
 
         gameGrid[i].position.x = startX + (j * 7 - ((10 - j) * 7)); // depanding on the count of the cubes they are placed in the middle of the scene
-
+        
         gameGrid[i].position.y = ignitionY - line * 15; // space between the lines achived by calculating in which line the algorithm is an adding space of 15 between the rows
 
         gameGrid[i].startPositionX = startX + (j * 7 - ((10 - j) * 7)); //  save start position for reset after dragging failed
@@ -158,8 +158,19 @@ function placeGameGrid() {
   draggingCubesGroup.rotation.y = -10 * Math.PI / 180;
   
 
-  draggingCubesGroup.position.x = 75;
+  //draggingCubesGroup.position.x = 0;
   draggingCubesGroup.position.y = 15;
+  
+  //var offsetGridX = gameGridGroup.children[0].position.x;
+  // for (var z = 1; z < startGridArray.length; z++) {
+  //  if(offsetGridX > gameGridGroup.children[i].position.x){
+  //    offsetGridX = gameGridGroup.children[i].position.x;
+  //  }
+  //}
+   
+  
+  //gameGridGroup.position.y = 0;
+  //gameGridGroup.position.y -= offsetGridX;
 
   gameGridGroup.rotation.x = -10 * Math.PI / 180;
 
@@ -218,8 +229,5 @@ function resetGrid() {
   eraseGrid();
   readJson(level["id"]);
   placeGameGrid();
-  console.log("startgame");
   startGrid();
-    console.log("startgame2");
-
 }

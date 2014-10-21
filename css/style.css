@@ -241,7 +241,7 @@ a{
 	width: 459px;
 	height: 410px;
 	background: url(../img/eule_left.png);
-	background-size: 459px 410px;
+	background-size: 100%;
 }
 
 .leftMenu{
@@ -405,6 +405,55 @@ a{
     transition:top .8s;	
 }
 
+.highscoreContainer{
+	z-index: 9999;
+	position: absolute;
+	width: 900px;
+	left: 33%;
+	top: -100%;
+	
+	-o-transition:top .8s;
+    -ms-transition:top .8s;
+    -moz-transition:top .8s;
+    -webkit-transition:top .8s;
+
+    transition:top .8s;	
+}
+
+.highscoreContainer.open{
+	top: 25%;
+	
+	-o-transition:top .8s;
+    -ms-transition:top .8s;
+    -moz-transition:top .8s;
+    -webkit-transition:top .8s;
+
+    transition:top .8s;	
+}
+
+.highscoreDiv{
+	float: left;
+	width: 410px;
+	height: 100px;
+	background: url(../img/menu_bg.png);
+	background-repeat: no-repeat;
+	background-size: 100%;
+	margin-top: 5px;
+	line-height: 50px;
+	font-size: 40px;
+	font-family: "Lobster";
+	text-align: center;
+}
+
+.highscoreDiv:nth-child(1),
+.highscoreDiv:nth-child(2){
+	margin-top: 0px;
+}
+
+.highscoreDiv.even{
+	margin-left: 20px !important;
+}
+
 .difficultySelection{
 	width: 52%;	
 	left: 40%;
@@ -444,7 +493,7 @@ a{
 	position: absolute;
 	width: 348px;
 	height: 82px;
-	background-size: 100%;
+	background-size: 100% !important;
 	background-repeat: no-repeat;
 	
 	line-height: 82px;
@@ -714,6 +763,12 @@ a{
 }
 
 
+@media only screen and (min-width: 770px){
+	tablet_navi{
+		display: none;
+	}
+}
+
 @media only screen and (max-width: 769px){
 	.menu li{
 		width: 325px;
@@ -911,6 +966,79 @@ a{
 }
 
 
-@media only screen and (min-width: 1100px) {
+@media only screen and (max-width: 1440px){
+	.ingame_owl{
+		width: 350px;
+		height: 301px;
+	}
 	
+	.leftMenu li{
+		width: 239px;
+		height: 57px;
+		line-height: 56px;
+	}
+}
+
+
+@media only screen and (min-width: 1101px) and (max-width: 1440px) {
+	#left.open{
+		left: -50px !important;
+	}
+	
+	
+}
+
+@media only screen and (min-width: 770px) and (max-width: 1100px) {
+	#left.open{
+		left: -100px !important;
+	}
+
+	.tutorialGUI{
+		width: 600px;
+		height: 400px;
+	}
+	
+	.allLevels{
+		left: 28%;
+	}
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1220px){
+	.difficultySelection{
+		width: 450px;
+		height: 547px;
+		
+	}
+	
+	.difficultySelection .easy, 
+	.difficultySelection .middle, 
+	.difficultySelection .hard {
+		width: 310px;
+		height: 74px;
+		line-height: 74px;
+	}
+	
+	.difficultySelection .easy{
+		left: -29%;
+		top: 26%;
+	}
+	
+	.difficultySelection .easy span{
+		padding-left: 168px;
+	}
+
+	.difficultySelection .middle {
+		left: 18%;
+	}
+	
+	.difficultySelection .hard {
+		right: -33.8%;
+	}
+}
+
+@media only screen and (min-width: 1100px) and (max-width: 1220px){
+	.tutorialGUI{
+		width: 700px;
+		height: 500px;
+	}
 }

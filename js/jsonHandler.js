@@ -1,11 +1,14 @@
 function sendSolutionJSON(json) {
-
+var solved;
+var score;
       var solutionJSON = json;
       console.log(user["name"]);
 
       $.ajax({
 
             type: "POST",
+            
+            async: false,
 
             url: "http://api.blendoku.verbunden.net/v1/level/solves/" + level["id"] + ".json",
             
@@ -26,8 +29,10 @@ function sendSolutionJSON(json) {
             dataType: "json",
 
             success: function(data) {
-
-                  //console.log("send json erfolgreich!");
+                  solved = data.solved;
+                  score = data.score;
+      console.log("in ajax " + solved + " , " + score);
+               
 
             },
 
@@ -38,7 +43,25 @@ function sendSolutionJSON(json) {
             }
 
       });
+      
+      console.log("nach ajax " + solved + " , " + score);
+         if (solved == true) {
+               var bestaetigung = window.confirm("Richtig! Score:" + score + " neues Level?");
+               //Nach Betätigung des Buttons
+               if (bestaetigung) {
+                     level["id"] = level["id"] + 1;
+                     resetGrid();
+                     console.log("after reset Grid");
+                     status = "goAway";
 
+               } else {
+                     //Abbrechen wurde gedrückt
+                     console.log("abbrechen")
+               }
+
+        }   else {
+                alert("falsche Lösung! streng dich mal an und versuchs nochmal...")
+            }
 }
 
 
@@ -122,6 +145,7 @@ function readJson(levelid) {
       //shuffle(colorArray);
       //user["name"] = $.cookie("username");
 }
+
 
 function shuffle(array) {
       var currentIndex = array.length,

@@ -17,8 +17,9 @@ var level = {
 	};
 var starttime;
 var user = { 
+	"id":"",
 	"name":"",
-	"accesstoken":"",
+	"email":"",
 }
 
 var jsonURL;
@@ -50,42 +51,17 @@ var anker; // needed to detect when cubes arrive back at their starting position
 var display;
 
 $(document).ready(function() {
-	
-		$('.menu .highscore').click(function(){
-	showHighscore();
-});
 
-function showHighscore(){
-	var highscoreArray = [];
-	var highscorediv;
-	var i = 0;
-	
-	$.ajax({
-		url: "http://api.blendoku.verbunden.net/v1/stats/highscore",
-		dataType: 'json',
-		async: false,
-		success: function(data){
-			console.log(JSON.stringify(data));
-			$.each(data, function (key,val){
-				i++
-				highscoreLi = '<div class="highscoreDiv even">'+i+'. '+val.name+'<br>'+val.user_score+' Punkte   Level '+val.played_level+'</div>';
-				$('.highscoreContainer').append(highscoreLi);
-			});
-			
-			i = 0;	
-		}
-	});
-}
-	
+	readJson(jsonURL);
 	init();
 
 	function init() {
 		var display = $('#webGLContainer'); // set the div in which the webGL is running
 		// getting the extrema of scene
-		xMax = display.width() ;
-		xMin = -display.width();
-		//yMax = display.height() / 2;
-		//yMin = -display.height() / 2;
+		var xMax = display.width() / 2;
+		var xMin = -display.width() / 2;
+		var yMax = display.height() / 2;
+		var yMin = -display.height() / 2;
 
 		//create the cam
 		cameraSettings();
@@ -120,6 +96,29 @@ function showHighscore(){
 		
 		render();
 	}
+
+	$('.menu .start').click(function(){	
+		if(status == "normal"){
+			prepareGame();
+
+			anker = cubeArray[0].position.x; // doesn't metter which cubes' x-position is used since all of them move with the same speed
+			status = "goAway";
+		}
+		//display.click();				// sets up gameGrid when start-button in main-menu is clicked by the user
+	});
+	
+	$('.back').click(function(){
+		if(status == "wait"){
+			status = "comeBack";
+			if(direction == 1){
+				direction = -1;
+			}
+			else{
+				direction = 1;
+			}
+		}
+	});
+	
 
 	function rendrerSettings() {
 		renderer = new THREE.WebGLRenderer({
@@ -207,8 +206,6 @@ function showHighscore(){
 	}
 
 	function render() {
-		//console.log(cubeArray[0].position.x);
-		//console.log(status);
 		if (status == "normal") {
 			rotate(); // add the rotation on a cube (around itself)
 			if (direction == 1) {
@@ -223,17 +220,6 @@ function showHighscore(){
 			move(); // push all cubes softly further away to fly outside of the scene
 			fadeOut(); // fade the cubes out while they're moved outside of the scene
 			startGrid(); // animate the appearance of the gamegrid
-			if (status == "wait") {
-				console.log("first time get in status wait");
-				for (var i = 0; i < colorArray.length; i++) {
-				dragingCubes[i].startPositionY = dragingCubes[i].position.y;
-				dragingCubes[i].startPositionX = dragingCubes[i].position.x;
-				}
-				for (var i = 0; i < gameGridGroup.children.length; i++) {
-					gameGridGroup.children[i].startPositionY = gameGridGroup.children[i].position.y;
-					gameGridGroup.children[i].startPositionX = gameGridGroup.children[i].position.x;
-				}
-			}
 			if (direction > 0) {
 				parentRotate(); // do the rotation of the rotation-cosmos
 			}
@@ -264,29 +250,6 @@ function showHighscore(){
 			renderer.render(scene, camera); // render the scene
 		}
 	}
-	
-	$('.menu .start').click(function(){	
-		if(status == "normal"){
-			//prepareGame();
-			resetGrid();
-
-			anker = cubeArray[0].position.x; // doesn't metter which cubes' x-position is used since all of them move with the same speed
-			status = "goAway";
-		}
-		//display.click();				// sets up gameGrid when start-button in main-menu is clicked by the user
-	});
-	
-	$('.back').click(function(){
-		if(status == "wait"){
-			status = "comeBack";
-			if(direction == 1){
-				direction = -1;
-			}
-			else{
-				direction = 1;
-			}
-		}
-	});
 	
 	// rotation of the cube arround itself
 	function rotate(){
@@ -453,11 +416,10 @@ function showHighscore(){
 
 	// checks if cube1 is outside of the scene
 	function checkWait() {
-		if ( (cubeArray[0].position.x > xMax) || (cubeArray[0].position.x < xMin)) {
+		if (cubeArray[0].position.x > xMax || cubeArray[0].position.x < xMin) {
 			status = "wait";
 		}
 	}
-	
 
 	// place object randomly in the scene
 	function randomPosition(object) {
@@ -468,34 +430,32 @@ function showHighscore(){
 	}
 	
 	
-//	// animates the moving in of the gamegrid an used colors into the scene
-//	function startGrid(){
-//
-//		var pos = gameGridGroup.children[0].position.y;
-//		if(pos < startGridY ){
-//			for(var i=0; i<gameGridGroup.children.length; i++){
-//				gameGridGroup.children[i].position.y += 7;
-//			}
-//			for(var i=0; i<dragingCubes.length; i++){
-//				dragingCubes[i].position.y -= 7;
-//			}
-//		}
-//    }
-//	
-//	// animates the moving out of the gamegrid an used colors out of the scene
-//	function exitGrid(){
-//
-//		if(gameGridGroup.children[0].position.y > ignitionY){
-//			for(var i=0; i<gameGridGroup.children.length; i++){
-//					gameGridGroup.children[i].position.y -= 7;
-//				}
-//			for(var i=0; i<dragingCubes.length; i++){
-//				dragingCubes[i].position.y += 7;
-//			}
-//		}
-//	}
+	// animates the moving in of the gamegrid an used colors into the scene
+	function startGrid(){
 
- 
+		var pos = gameGridGroup.children[0].position.y;
+		if(pos < startGridY ){
+			for(var i=0; i<gameGridGroup.children.length; i++){
+				gameGridGroup.children[i].position.y += 7;
+			}
+			for(var i=0; i<dragingCubes.length; i++){
+				dragingCubes[i].position.y -= 7;
+			}
+		}
+    }
+	
+	// animates the moving out of the gamegrid an used colors out of the scene
+	function exitGrid(){
+
+		if(gameGridGroup.children[0].position.y > ignitionY){
+			for(var i=0; i<gameGridGroup.children.length; i++){
+					gameGridGroup.children[i].position.y -= 7;
+				}
+			for(var i=0; i<dragingCubes.length; i++){
+				dragingCubes[i].position.y += 7;
+			}
+		}
+	}
 	
 	
 });

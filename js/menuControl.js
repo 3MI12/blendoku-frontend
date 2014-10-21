@@ -7,9 +7,8 @@ $(document).ready(function(){
 	$('.menu li.start').click(function(){
 		$('#foreground').animate({opacity: "0"},1500, function(){
 														$('#left').addClass('open');
-														if($(window).width() < 769){
-															$('.tablet_navi').addClass('open');
-														}
+														$('.tablet_navi').addClass('open');
+														
 														});
 		$('#foreground').animate({left: "-100%"},1);
 		
@@ -21,9 +20,7 @@ $(document).ready(function(){
 														showOnlyBackToMainDeskop();
 														$('.tutorialGUI').addClass('open');
 														showOnlyBackToMainTablet();
-														if($(window).width() < 769){
-															
-														}
+														
 														});	
 		$('#foreground').animate({left: "-100%"},1);
 		
@@ -34,9 +31,21 @@ $(document).ready(function(){
 														$('#left').addClass('open');
 														showOnlyBackToMainDeskop();
 														$('.difficultySelection').addClass('open');
-														if($(window).width() < 769){
-															showOnlyBackToMainTablet();
-														}	
+														showOnlyBackToMainTablet();
+															
+														});	
+		$('#foreground').animate({left: "-100%"},1);	
+					
+									
+	});
+	
+	$('.menu li.highscore').click(function(){
+		$('#foreground').animate({opacity: "0"},1500,function(){
+														$('#left').addClass('open');
+														showOnlyBackToMainDeskop();
+														$('.highscoreContainer').addClass('open');
+														showOnlyBackToMainTablet();
+															
 														});	
 		$('#foreground').animate({left: "-100%"},1);	
 					
@@ -61,6 +70,14 @@ $(document).ready(function(){
 		$('#left .score').css('display', 'block');
 		$('#foreground').animate({left: "0"},1);
 		$('#foreground').animate({opacity: "1"},1500);
+		$('.highscoreContainer').removeClass('open');
+    });
+	
+		$('.finish').click(function(){
+		var solutionJson = getSolutionJSON();
+		sendSolutionJSON(solutionJson);
+		
+		
     });
 	
 	
@@ -81,4 +98,11 @@ $(document).ready(function(){
 		$('#left .score').css('display', 'none');
 	}
 	
+	
+	
+	
+	
+	
+	
+
 });

@@ -166,7 +166,7 @@ function onDocumentMouseMove(event) {
 
 function onDocumentMouseDown(event) {
 
-
+ console.log(cubeArray[0].position.x);
 
   if (event.which == 1) {
 
