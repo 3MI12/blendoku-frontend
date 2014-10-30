@@ -60,49 +60,45 @@ $(document).ready(function(){
 	
 	
 	$('.back').click(function(){
-		resetMobileNav();
-		$('.back.open').removeClass('open');
-		$('#left.open').removeClass('open');
-		$('.tutorialGUI').removeClass('open');
-		$('.difficultySelection').removeClass('open');
-		$('.allLevels').removeClass('open');
-		$('#left .finish').css('display', 'block');
-		$('#left .score').css('display', 'block');
-		$('#foreground').animate({left: "0"},1);
-		$('#foreground').animate({opacity: "1"},1500);
-		$('.highscoreContainer').removeClass('open');
+			
+			resetMobileNav();
+			$('.back.open').removeClass('open');
+			$('#left.open').removeClass('open');
+			$('.tutorialGUI').removeClass('open');
+			$('.difficultySelection').removeClass('open');
+			$('.allLevels').removeClass('open');
+			$('#left .finish').css('display', 'block');
+			$('#foreground').animate({left: "0"},1);
+			$('#foreground').animate({opacity: "1"},1500);
+			$('.highscoreContainer').removeClass('open');
+			if(status == "wait"){
+				status = "comeBack";
+				if(direction == 1){
+					direction = -1;
+				}
+				else{
+					direction = 1;
+				}
+			}
     });
 	
 		$('.finish').click(function(){
 		var solutionJson = getSolutionJSON();
 		sendSolutionJSON(solutionJson);
-		
-		
     });
-	
-	
-	function resetMobileNav(){
-		$('.tablet_navi').removeClass('open');
-		$('.tablet_navi .finish').css('dispaly', 'block');
-		$('.tablet_navi .score').css('display','block');
-	}
 	
 	function showOnlyBackToMainTablet(){
 		$('.tablet_navi').addClass('open');
 		$('.tablet_navi.open .finish').css('display', 'none');
-		$('.tablet_navi .score').css('display', 'none');
 	}
 	
 	function showOnlyBackToMainDeskop(){
 		$('#left .finish').css('display', 'none');
-		$('#left .score').css('display', 'none');
 	}
-	
-	
-	
-	
-	
-	
-	
 
 });
+
+	function resetMobileNav(){
+		$('.tablet_navi').removeClass('open');
+		$('.tablet_navi .finish').css('dispaly', 'block');
+	}

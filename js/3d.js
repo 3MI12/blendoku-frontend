@@ -3,7 +3,7 @@ var container;
 var camera, controls, scene, projector, renderer;
 var plane;
 
-var defaultColor = "#aeaeae";
+var defaultColor = "#ffffff";
 
 var mouse = new THREE.Vector2(),
 		offset = new THREE.Vector3();
@@ -60,6 +60,10 @@ function showHighscore(){
 	var highscorediv;
 	var i = 0;
 	
+	$.each($('.highscoreDiv'), function(){
+		$(this).remove();
+	});
+	
 	$.ajax({
 		url: "http://api.blendoku.verbunden.net/v1/stats/highscore",
 		dataType: 'json',
@@ -68,7 +72,7 @@ function showHighscore(){
 			console.log(JSON.stringify(data));
 			$.each(data, function (key,val){
 				i++
-				highscoreLi = '<div class="highscoreDiv even">'+i+'. '+val.name+'<br>'+val.user_score+' Punkte   Level '+val.played_level+'</div>';
+				highscoreLi = '<div class="highscoreDiv">'+i+'. '+val.name+'<br>'+val.user_score+' Punkte</div>';
 				$('.highscoreContainer').append(highscoreLi);
 			});
 			
@@ -82,7 +86,7 @@ function showHighscore(){
 	function init() {
 		var display = $('#webGLContainer'); // set the div in which the webGL is running
 		// getting the extrema of scene
-		xMax = display.width() ;
+		xMax = display.width();
 		xMin = -display.width();
 		//yMax = display.height() / 2;
 		//yMin = -display.height() / 2;
@@ -273,32 +277,17 @@ function showHighscore(){
 			anker = cubeArray[0].position.x; // doesn't metter which cubes' x-position is used since all of them move with the same speed
 			status = "goAway";
 		}
-		//display.click();				// sets up gameGrid when start-button in main-menu is clicked by the user
 	});
-	
-	$('.back').click(function(){
-		if(status == "wait"){
-			status = "comeBack";
-			if(direction == 1){
-				direction = -1;
-			}
-			else{
-				direction = 1;
-			}
-		}
-	});
-	
+		
 	// rotation of the cube arround itself
 	function rotate(){
 		for(var i=0; i<cubeCount; i++){   
 			if(i % 3 == 0){
 				cubeArray[i].rotation.x -= 0.01;	
 			}
-			
 			if(i % 3 == 1){
 				cubeArray[i].rotation.y -= 0.01;
 			}
-			
 			else{
 				cubeArray[i].rotation.z -= 0.01;	
 			}
@@ -378,18 +367,6 @@ function showHighscore(){
 			camera.fov -= 1;
 			camera.updateProjectionMatrix();
 		}
-
-        // repositioning of the camera in order to capture the whole grid after the frustum was lowered
-        /*if(camera.position.x < 140){
-            camera.position.x += 10;
-            camera.lookAt(new THREE.Vector3(0,0,0));    // reset the LookAtPoint of the camera since its position has been changed
-            camera.updateProjectionMatrix();            // update the ProjectionMatrix to append the new settings
-        }
-        if(camera.position.y > -450){
-            camera.position.y -= 10;
-            camera.lookAt(new THREE.Vector3(0,0,0));
-            camera.updateProjectionMatrix();
-        }*/
         if(camera.position.z < 1200){
 			camera.position.z += 10;
             camera.lookAt(new THREE.Vector3(0,0,0));
@@ -404,18 +381,7 @@ function showHighscore(){
 			camera.fov += 1;
 			camera.updateProjectionMatrix();
 		}
-
         // reverse the repositioning made in the zoomIn()-method
-        /*if(camera.position.x > 0){
-            camera.position.x -= 10;
-            camera.lookAt(new THREE.Vector3(0,0,0));
-            camera.updateProjectionMatrix();
-        }
-        if(camera.position.y < 0){
-            camera.position.y += 10;
-            camera.lookAt(new THREE.Vector3(0,0,0));
-            camera.updateProjectionMatrix();
-        }*/
         if(camera.position.z > 500){
 			camera.position.z -= 7;
             camera.lookAt(new THREE.Vector3(0,0,0));
@@ -447,7 +413,6 @@ function showHighscore(){
 	function checkStatus() {
 		if (cubeArray[0].position.x <= anker) {
 			status = "normal"
-			//display.click();	// perform teh click on display -> changes status from "comeBack" to "normal"
 		}
 	}
 
@@ -466,36 +431,4 @@ function showHighscore(){
 		object.position.y = (Math.random() - 0.5) * (Math.random() * range);
 		object.position.z = (Math.random() - 0.5) * (Math.random() * range);
 	}
-	
-	
-//	// animates the moving in of the gamegrid an used colors into the scene
-//	function startGrid(){
-//
-//		var pos = gameGridGroup.children[0].position.y;
-//		if(pos < startGridY ){
-//			for(var i=0; i<gameGridGroup.children.length; i++){
-//				gameGridGroup.children[i].position.y += 7;
-//			}
-//			for(var i=0; i<dragingCubes.length; i++){
-//				dragingCubes[i].position.y -= 7;
-//			}
-//		}
-//    }
-//	
-//	// animates the moving out of the gamegrid an used colors out of the scene
-//	function exitGrid(){
-//
-//		if(gameGridGroup.children[0].position.y > ignitionY){
-//			for(var i=0; i<gameGridGroup.children.length; i++){
-//					gameGridGroup.children[i].position.y -= 7;
-//				}
-//			for(var i=0; i<dragingCubes.length; i++){
-//				dragingCubes[i].position.y += 7;
-//			}
-//		}
-//	}
-
- 
-	
-	
 });

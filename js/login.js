@@ -1,6 +1,6 @@
 	
 
-var usernameCookie, passwordCookie;
+var usernameCookie;
 var username, password;
 var jsonUser = [];
 var jsonLogout = [];
@@ -9,10 +9,12 @@ var logoutURL = "http://api.blendoku.verbunden.net/v1/user/logouts.json";
 
 $(document).ready(function(){
 	
-	//if(usernameCookie == '' &&  == ''){
+	
+	if(usernameCookie == null ){
 		showLogin();// show the loginform when user arrives on page
-		
-	//}
+	}
+	
+	
 	
 	$('.button').click(function(event){
 		event.preventDefault();
@@ -54,11 +56,11 @@ $(document).ready(function(){
 				}
 				else{
 					jsonLogout = '{"user":{"name":"'+data['name']+'","accesstoken":"'+data['accesstoken']+'"}}';
-					usernameCookie = $.cookie("username", username, { expires: 1, path: '/' });		// create cookie for username, expires after 1 day
+					usernameCookie = $.cookie("username", username, { expires: 1, path: '/'});		// create cookie for username, expires after 1 day
 
 					user["accesstoken"] = data['accesstoken'];
 					user["name"] = data['name'];
-					console.log("else zweig: " + user["name"] + " , " + user["accesstoken"]);
+					console.log("Cookie gesetz: "+usernameCookie);
 					$('.logout').addClass('open');		// shows up logout-button
 					$('.login').removeClass('open');	// hides login-form
 					$('.mainMenu').css("display", "block");
