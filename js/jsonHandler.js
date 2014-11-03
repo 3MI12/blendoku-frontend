@@ -1,7 +1,8 @@
+var score;
 // send post of solution JSON to API
 function sendSolutionJSON(json) {
       var solved;
-      var score;
+      
       var solutionJSON = json;
 
       $.ajax({

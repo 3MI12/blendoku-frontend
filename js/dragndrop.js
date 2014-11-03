@@ -94,32 +94,35 @@ function onDocumentMouseMove(event) {
 
 // events for mouse down
 function onDocumentMouseDown(event) {
-   if (event.which == 1) {
-     event.preventDefault();
-     //get mouse vector
-     var vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
-      //unprojecting 2D points into the 3D world
-     projector.unprojectVector(vector, camera);
-
-     //create raycaster and check if element of game grid  or color grid is intersected by the raycaster
-     var raycaster = new THREE.Raycaster(camera.position, vector.sub(camera.position).normalize());
-     var intersectDraggingCubes = raycaster.intersectObjects(draggingCubesGroup.children);
-     var intersectGameGrid = raycaster.intersectObjects(gameGridGroup.children);
-
-     if (intersectDraggingCubes.length > 0) {
-       var intersects = intersectDraggingCubes;
-     } else if (intersectGameGrid.length > 0) {
-       var intersects = intersectGameGrid;
-     }
-    
-    // check if intersected element is active and editable --> set global SELECTED 
-     if (intersects[0].object.active == true && intersects[0].object.editable == true) {
-       SELECTED = intersects[0].object;
-       offset.copy(intersects[0].point).sub(plane.position);
-       document.getElementById("webGLContainer").style.cursor = 'move';
-     } else {
-       document.getElementById("webGLContainer").style.cursor = 'crosshair';
-     }
+	
+   if(status == "wait"){
+	   if (event.which == 1) {
+		 event.preventDefault();
+		 //get mouse vector
+		 var vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+		  //unprojecting 2D points into the 3D world
+		 projector.unprojectVector(vector, camera);
+	
+		 //create raycaster and check if element of game grid  or color grid is intersected by the raycaster
+		 var raycaster = new THREE.Raycaster(camera.position, vector.sub(camera.position).normalize());
+		 var intersectDraggingCubes = raycaster.intersectObjects(draggingCubesGroup.children);
+		 var intersectGameGrid = raycaster.intersectObjects(gameGridGroup.children);
+	
+		 if (intersectDraggingCubes.length > 0) {
+		   var intersects = intersectDraggingCubes;
+		 } else if (intersectGameGrid.length > 0) {
+		   var intersects = intersectGameGrid;
+		 }
+		
+		// check if intersected element is active and editable --> set global SELECTED 
+		 if (intersects[0].object.active == true && intersects[0].object.editable == true) {
+		   SELECTED = intersects[0].object;
+		   offset.copy(intersects[0].point).sub(plane.position);
+		   document.getElementById("webGLContainer").style.cursor = 'move';
+		 } else {
+		   document.getElementById("webGLContainer").style.cursor = 'crosshair';
+		 }
+	   }
    }
  }
 

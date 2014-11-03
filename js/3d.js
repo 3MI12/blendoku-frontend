@@ -86,8 +86,8 @@ function showHighscore(){
 	function init() {
 		var display = $('#webGLContainer'); // set the div in which the webGL is running
 		// getting the extrema of scene
-		xMax = display.width();
-		xMin = -display.width();
+		xMax = display.width()/2;
+		xMin = -display.width()/2;
 		//yMax = display.height() / 2;
 		//yMin = -display.height() / 2;
 

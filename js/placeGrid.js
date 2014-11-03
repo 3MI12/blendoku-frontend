@@ -65,8 +65,8 @@ function placeGameGrid() {
   //modify position and rotation of grid groups
   draggingCubesGroup.rotation.x = -10 * Math.PI / 180;
   draggingCubesGroup.rotation.y = -10 * Math.PI / 180;
-  draggingCubesGroup.position.x = 50;
-  draggingCubesGroup.position.y = 25;
+  draggingCubesGroup.position.x = 75;
+  draggingCubesGroup.position.y = 50;
   gameGridGroup.position.z = -20;
   gameGridGroup.rotation.x = -10 * Math.PI / 180;
   gameGridGroup.rotation.y = -10 * Math.PI / 180;
